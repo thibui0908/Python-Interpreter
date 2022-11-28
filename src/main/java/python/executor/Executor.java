@@ -1,16 +1,12 @@
 package python.executor;
 
-import org.stringtemplate.v4.compiler.CodeGenerator.region_return;
-
-import com.ibm.icu.impl.TextTrieMap.Output;
-
 import python.antlr.PythonBaseVisitor;
 import python.antlr.PythonParser.Assignment_stmtContext;
 import python.antlr.PythonParser.ExprContext;
-import python.antlr.PythonParser.NumberContext;
 import python.antlr.PythonParser.Print_stmtContext;
 import python.antlr.PythonParser.TestContext;
 import python.antlr.PythonParser.While_stmtContext;
+import python.type.Typespec;
 
 public class Executor extends PythonBaseVisitor<Object> {
     private SymStack stack;
@@ -23,7 +19,7 @@ public class Executor extends PythonBaseVisitor<Object> {
     public Object visitAssignment_stmt(Assignment_stmtContext ctx) {
         String variable = ctx.NAME().getText();
         Object data = visit(ctx.expr());
-        stack.insert(variable, data);
+        stack.insert(variable, data, ctx.expr().type);
         return null;
     }
 
@@ -36,37 +32,48 @@ public class Executor extends PythonBaseVisitor<Object> {
 
     @Override
     public Object visitExpr(ExprContext ctx) {
-        if (ctx.number() != null)
-            return visit(ctx.number());
-        else if (ctx.NAME() != null)
-            return stack.lookup(ctx.NAME().getText()).getData();
-        else if (ctx.expr().size() == 1) {
-            return visit(ctx.expr(0));
+        if (ctx.number() != null) {
+            if (ctx.number().FLOAT() != null) {
+                ctx.type = Typespec.FLOAT;
+                return Double.parseDouble(ctx.number().FLOAT().getText());
+            }
+            ctx.type = Typespec.INTEGER;
+            return Long.parseLong(ctx.number().INTEGER().getText());
+        } else if (ctx.NAME() != null) {
+            SymEntry entry = stack.lookup(ctx.NAME().getText());
+            ctx.type = entry.getType();
+            return entry.getData();
+        } else if (ctx.expr().size() == 1) {
+            ExprContext childExpr = ctx.expr(0);
+            Object ret = visit(ctx.expr(0));
+            ctx.type = childExpr.type;
+            return ret;
         }
         Object operand1 = visit(ctx.expr(0));
+        Typespec type1 = ctx.expr(0).type;
         for (int i = 1; i < ctx.expr().size(); i++) {
             String op = ctx.add_op(i - 1).getText();
             Object operand2 = visit(ctx.expr(i));
-            if (operand1 instanceof Long) {
+            Typespec type2 = ctx.expr(i).type;
+            if (type1 == Typespec.INTEGER && type2 == Typespec.INTEGER) {
+                ctx.type = Typespec.INTEGER;
                 operand1 = op.equals("+")
                         ? (Long) operand1 + (Long) operand2
                         : (Long) operand1 - (Long) operand2;
-            } else if (operand1 instanceof Double) {
-                operand1 = op.equals("+")
-                        ? (Double) operand1 + (Double) operand2
-                        : (Double) operand1 - (Double) operand2;
-            } else {
+            } else if (type1 == Typespec.STRING && type2 == Typespec.STRING) {
+                ctx.type = Typespec.STRING;
                 operand1 = (String) operand1 + (String) operand2;
+            } else {
+                if (type2 == Typespec.FLOAT) {
+                    Object tmp = operand1;
+                    operand1 = operand2;
+                    operand2 = tmp;
+                }
+                ctx.type = Typespec.FLOAT;
+                operand1 = (Double) operand1 + ((Long) operand2).doubleValue();
             }
         }
         return operand1;
-    }
-
-    @Override
-    public Object visitNumber(NumberContext ctx) {
-        if (ctx.FLOAT() != null)
-            return Double.parseDouble(ctx.FLOAT().getText());
-        return Long.parseLong(ctx.INTEGER().getText());
     }
 
     @Override

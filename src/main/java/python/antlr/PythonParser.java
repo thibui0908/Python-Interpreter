@@ -1,5 +1,8 @@
 // Generated from java-escape by ANTLR 4.11.1
 package python.antlr;
+ 
+    import python.type.Typespec;
+
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -1208,6 +1211,7 @@ public class PythonParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class ExprContext extends ParserRuleContext {
+		public Typespec type = null;
 		public TerminalNode NAME() { return getToken(PythonParser.NAME, 0); }
 		public NumberContext number() {
 			return getRuleContext(NumberContext.class,0);

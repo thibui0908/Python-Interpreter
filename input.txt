@@ -3,3 +3,5 @@ while i != 128:
     print(i)
     i = i + i
 print(i)
+i = i + 2.3
+print(i)

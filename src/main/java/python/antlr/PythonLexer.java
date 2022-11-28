@@ -3,6 +3,8 @@ package python.antlr;
                                                      //*** https://github.com/antlr/antlr4/blob/master/doc/grammars.md#actions-at-the-grammar-level
 import org.antlr.v4.runtime.misc.Interval;
 import java.util.*;
+import python.type.Typespec;
+
 
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Stack;
 
+import python.type.Typespec;
+
 public class SymStack {
     private Stack<SymTab> stack;
 
@@ -20,8 +22,13 @@ public class SymStack {
         stack.pop();
     }
 
-    void insert(String key, Object data) {
-        stack.peek().insert(key, data);
+    void insert(String key, Object data, Typespec type) {
+        SymEntry entry = lookup(key);
+        if (entry != null) {
+            entry.setData(data);
+            entry.setType(type);
+        } else
+            stack.peek().insert(key, data, type);
     }
 
     SymEntry lookup(String key) {

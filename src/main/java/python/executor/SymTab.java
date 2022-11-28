@@ -2,13 +2,15 @@ package python.executor;
 
 import java.util.HashMap;
 
+import python.type.Typespec;
+
 public class SymTab extends HashMap<String, SymEntry> {
 
     SymEntry lookup(String key) {
         return getOrDefault(key, null);
     }
 
-    void insert(String key, Object data) {
-        put(key, new SymEntry(key, data));
+    void insert(String key, Object data, Typespec type) {
+        put(key, new SymEntry(key, data, type));
     }
 }

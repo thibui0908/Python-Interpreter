@@ -1,12 +1,16 @@
 package python.executor;
 
+import python.type.Typespec;
+
 public class SymEntry {
     String name;
     Object data;
+    Typespec type;
 
-    public SymEntry(String name, Object data) {
+    public SymEntry(String name, Object data, Typespec type) {
         this.name = name;
         this.data = data;
+        this.type = type;
     }
 
     public String getName() {
@@ -23,5 +27,13 @@ public class SymEntry {
 
     public void setData(Object data) {
         this.data = data;
+    }
+
+    public Typespec getType() {
+        return type;
+    }
+
+    public void setType(Typespec type) {
+        this.type = type;
     }
 }

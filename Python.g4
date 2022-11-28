@@ -40,6 +40,11 @@ tokens {
 @lexer::header {                                                     //*** https://github.com/antlr/antlr4/blob/master/doc/grammars.md#actions-at-the-grammar-level
 import org.antlr.v4.runtime.misc.Interval;
 import java.util.*;
+import python.type.Typespec;
+
+}
+@parser::header { 
+    import python.type.Typespec;
 }
 
 // this embedded code section will be copied to the generated file: Python3Lexer.java
@@ -266,7 +271,12 @@ print_stmt:
 
 comp_op: '<' | '>' | '==' | '>=' | '<=' | '!=';
 add_op: '+' | '-';
-expr: expr (add_op expr)+ | NAME | number | '(' expr ')';
+expr
+	locals[ Typespec type = null ]:
+	expr (add_op expr)+
+	| NAME
+	| number
+	| '(' expr ')';
 
 number: INTEGER | FLOAT;
 
