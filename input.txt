@@ -1,8 +1,5 @@
-AAA AAAAA
-    BBB BB B
-    BB BBBBB BB
-    CCCCCC C CC
-    BB BBBBBB
-    C CCC
-        DDD DD D
-        DDD D DDDD
+i = 1
+while i != 128:
+    print(i)
+    i = i + i
+print(i)
