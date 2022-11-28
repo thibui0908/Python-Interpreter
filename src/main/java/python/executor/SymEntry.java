@@ -1,16 +1,26 @@
 package python.executor;
 
-import python.type.Typespec;
+import python.type.Typespec.*;
+
+import java.util.ArrayList;
+
+import python.type.Typespec;;
 
 public class SymEntry {
     String name;
-    Object data;
+    DataStructure data;
     Typespec type;
 
     public SymEntry(String name, Object data, Typespec type) {
         this.name = name;
-        this.data = data;
         this.type = type;
+        createDS(data);
+    }
+
+    private void createDS(Object data) {
+        if (type == Typespec.STRING || type == Typespec.INTEGER || type == Typespec.FLOAT) {
+            data = new Primitive(data);
+        }
     }
 
     public String getName() {
@@ -26,7 +36,7 @@ public class SymEntry {
     }
 
     public void setData(Object data) {
-        this.data = data;
+
     }
 
     public Typespec getType() {
@@ -36,4 +46,50 @@ public class SymEntry {
     public void setType(Typespec type) {
         this.type = type;
     }
+
+    private interface DataStructure {
+        Object getData();
+
+        void setData(Object data);
+    }
+
+    private class Primitive implements DataStructure {
+        Object data;
+
+        public Primitive(Object data) {
+            this.data = data;
+        }
+
+        @Override
+        public Object getData() {
+            return data;
+        }
+
+        @Override
+        public void setData(Object data) {
+            this.data = data;
+        }
+
+    }
+
+    private class List implements DataStructure {
+        ArrayList<SymEntry> list;
+
+        List(Object data) {
+            list = (ArrayList<SymEntry>) data;
+        }
+
+        @Override
+        public Object getData() {
+            return list;
+        }
+
+        @Override
+        public void setData(Object data) {
+            list = (ArrayList<SymEntry>) data;
+
+        }
+
+    }
+
 }
