@@ -13,17 +13,17 @@ import python.antlr.PythonParser.TestContext;
 import python.antlr.PythonParser.While_stmtContext;
 
 public class Executor extends PythonBaseVisitor<Object> {
-    private SymTab table;
+    private SymStack stack;
 
     public Executor() {
-        table = new SymTab();
+        stack = new SymStack();
     }
 
     @Override
     public Object visitAssignment_stmt(Assignment_stmtContext ctx) {
         String variable = ctx.NAME().getText();
         Object data = visit(ctx.expr());
-        table.put(variable, new SymEntry(variable, data));
+        stack.insert(variable, data);
         return null;
     }
 
@@ -39,7 +39,7 @@ public class Executor extends PythonBaseVisitor<Object> {
         if (ctx.number() != null)
             return visit(ctx.number());
         else if (ctx.NAME() != null)
-            return table.get(ctx.NAME().getText()).data;
+            return stack.lookup(ctx.NAME().getText()).getData();
         else if (ctx.expr().size() == 1) {
             return visit(ctx.expr(0));
         }
