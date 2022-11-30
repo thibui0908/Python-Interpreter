@@ -101,6 +101,16 @@ public interface PythonListener extends ParseTreeListener {
 	 */
 	void exitContinue_stmt(PythonParser.Continue_stmtContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link PythonParser#list}.
+	 * @param ctx the parse tree
+	 */
+	void enterList(PythonParser.ListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#list}.
+	 * @param ctx the parse tree
+	 */
+	void exitList(PythonParser.ListContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link PythonParser#compound_stmt}.
 	 * @param ctx the parse tree
 	 */
@@ -161,25 +171,15 @@ public interface PythonListener extends ParseTreeListener {
 	 */
 	void exitPrint_stmt(PythonParser.Print_stmtContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PythonParser#comp_op}.
+	 * Enter a parse tree produced by {@link PythonParser#lookup}.
 	 * @param ctx the parse tree
 	 */
-	void enterComp_op(PythonParser.Comp_opContext ctx);
+	void enterLookup(PythonParser.LookupContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link PythonParser#comp_op}.
+	 * Exit a parse tree produced by {@link PythonParser#lookup}.
 	 * @param ctx the parse tree
 	 */
-	void exitComp_op(PythonParser.Comp_opContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link PythonParser#add_op}.
-	 * @param ctx the parse tree
-	 */
-	void enterAdd_op(PythonParser.Add_opContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PythonParser#add_op}.
-	 * @param ctx the parse tree
-	 */
-	void exitAdd_op(PythonParser.Add_opContext ctx);
+	void exitLookup(PythonParser.LookupContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PythonParser#expr}.
 	 * @param ctx the parse tree
@@ -190,6 +190,136 @@ public interface PythonListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExpr(PythonParser.ExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#logicOp}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogicOp(PythonParser.LogicOpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#logicOp}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogicOp(PythonParser.LogicOpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#notOp}.
+	 * @param ctx the parse tree
+	 */
+	void enterNotOp(PythonParser.NotOpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#notOp}.
+	 * @param ctx the parse tree
+	 */
+	void exitNotOp(PythonParser.NotOpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#compareExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterCompareExpression(PythonParser.CompareExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#compareExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitCompareExpression(PythonParser.CompareExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#notExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterNotExpression(PythonParser.NotExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#notExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitNotExpression(PythonParser.NotExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#relOp}.
+	 * @param ctx the parse tree
+	 */
+	void enterRelOp(PythonParser.RelOpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#relOp}.
+	 * @param ctx the parse tree
+	 */
+	void exitRelOp(PythonParser.RelOpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#addOp}.
+	 * @param ctx the parse tree
+	 */
+	void enterAddOp(PythonParser.AddOpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#addOp}.
+	 * @param ctx the parse tree
+	 */
+	void exitAddOp(PythonParser.AddOpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#mulOp}.
+	 * @param ctx the parse tree
+	 */
+	void enterMulOp(PythonParser.MulOpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#mulOp}.
+	 * @param ctx the parse tree
+	 */
+	void exitMulOp(PythonParser.MulOpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#simpleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterSimpleExpression(PythonParser.SimpleExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#simpleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitSimpleExpression(PythonParser.SimpleExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterTerm(PythonParser.TermContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitTerm(PythonParser.TermContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void enterFactor(PythonParser.FactorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void exitFactor(PythonParser.FactorContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#variableFactor}.
+	 * @param ctx the parse tree
+	 */
+	void enterVariableFactor(PythonParser.VariableFactorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#variableFactor}.
+	 * @param ctx the parse tree
+	 */
+	void exitVariableFactor(PythonParser.VariableFactorContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#variable}.
+	 * @param ctx the parse tree
+	 */
+	void enterVariable(PythonParser.VariableContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#variable}.
+	 * @param ctx the parse tree
+	 */
+	void exitVariable(PythonParser.VariableContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#string}.
+	 * @param ctx the parse tree
+	 */
+	void enterString(PythonParser.StringContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#string}.
+	 * @param ctx the parse tree
+	 */
+	void exitString(PythonParser.StringContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PythonParser#number}.
 	 * @param ctx the parse tree

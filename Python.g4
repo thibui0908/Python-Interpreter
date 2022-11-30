@@ -250,10 +250,12 @@ stmt: simple_stmt | compound_stmt;
 
 simple_stmt: small_stmt NEWLINE;
 small_stmt: assignment_stmt | flow_stmt | print_stmt;
-assignment_stmt: NAME '=' expr;
+assignment_stmt: (lookup | NAME) '=' expr;
 flow_stmt: break_stmt | continue_stmt;
 break_stmt: 'break';
 continue_stmt: 'continue';
+
+list: OPEN_BRACK (expr (',' expr)*)? CLOSE_BRACK;
 
 compound_stmt: if_stmt | while_stmt;
 if_stmt:
@@ -263,22 +265,54 @@ if_stmt:
 while_stmt: 'while' test ':' suite;
 suite: simple_stmt | NEWLINE INDENT stmt+ DEDENT;
 
-test:
-	expr (comp_op expr)*; // differents from the original grammar
+test: expr;
 
 print_stmt:
 	'print' OPEN_PAREN (STRING | expr) CLOSE_PAREN; // only for demonstration
 
-comp_op: '<' | '>' | '==' | '>=' | '<=' | '!=';
-add_op: '+' | '-';
+lookup: NAME OPEN_BRACK expr CLOSE_BRACK;
+
 expr
-	locals[ Typespec type = null ]:
-	expr (add_op expr)+
-	| NAME
+	locals[ Typespec type = null]:
+	compareExpression (logicOp compareExpression)?;
+
+logicOp: 'AND' | 'and' | 'OR' | 'or';
+notOp: 'not' | 'NOT';
+compareExpression
+	locals[ Typespec type = null]:
+	notExpression (relOp notExpression)?;
+notExpression
+	locals[ Typespec type = null]:
+	notOp simpleExpression
+	| simpleExpression;
+
+relOp: '==' | '!=' | '<' | '<=' | '>' | '>=';
+addOp: '+' | '-';
+mulOp: '*' | '/' | '//' | '%';
+NEG: '-';
+
+simpleExpression: NEG? term (addOp term)*;
+
+term
+	locals[ Typespec type = null]: factor (mulOp factor)*;
+
+factor
+	locals[ Typespec type = null]:
+	variableFactor
 	| number
+	| string
 	| '(' expr ')';
 
-number: INTEGER | FLOAT;
+variableFactor
+	locals[ Typespec type = null ]: variable;
+variable
+	locals[ Typespec type = null, SymtabEntry entry = null ]:
+	NAME;
+
+string
+	locals[ Typespec type = null]: STRING_LITERAL;
+number
+	locals[ Typespec type = null]: INTEGER | FLOAT;
 
 /*
  * lexer rules

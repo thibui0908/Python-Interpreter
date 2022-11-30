@@ -1,11 +1,16 @@
 package python.executor;
 
+import java.util.ArrayList;
+
 import python.antlr.PythonBaseVisitor;
 import python.antlr.PythonParser.Assignment_stmtContext;
 import python.antlr.PythonParser.ExprContext;
+import python.antlr.PythonParser.ListContext;
 import python.antlr.PythonParser.Print_stmtContext;
 import python.antlr.PythonParser.TestContext;
 import python.antlr.PythonParser.While_stmtContext;
+import python.intermediate.SymEntry;
+import python.intermediate.SymStack;
 import python.type.Typespec;
 
 public class Executor extends PythonBaseVisitor<Object> {
@@ -48,6 +53,14 @@ public class Executor extends PythonBaseVisitor<Object> {
             Object ret = visit(ctx.expr(0));
             ctx.type = childExpr.type;
             return ret;
+        } else if (ctx.list() != null) {
+            ctx.type = Typespec.LIST;
+            return visit(ctx.list());
+        } else if (ctx.lookup() != null) {
+            int index = ((Long) visit(ctx.lookup().expr())).intValue();
+            SymEntry entry = ((ArrayList<SymEntry>) stack.lookup(ctx.lookup().NAME().getText()).getData()).get(index);
+            ctx.type = entry.getType();
+            return entry.getData();
         }
         Object operand1 = visit(ctx.expr(0));
         Typespec type1 = ctx.expr(0).type;
@@ -108,6 +121,17 @@ public class Executor extends PythonBaseVisitor<Object> {
             test = (boolean) visit(ctx.test());
         }
         return null;
+    }
+
+    @Override
+    public Object visitList(ListContext ctx) {
+        ArrayList<SymEntry> list = new ArrayList<>();
+        for (int i = 0; i < ctx.expr().size(); i++) {
+            Object data = visit(ctx.expr(i));
+            Typespec type = ctx.expr(i).type;
+            list.add(new SymEntry(null, data, type));
+        }
+        return list;
     }
 
 }

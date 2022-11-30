@@ -68,6 +68,12 @@ public interface PythonVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitContinue_stmt(PythonParser.Continue_stmtContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link PythonParser#list}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitList(PythonParser.ListContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link PythonParser#compound_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -104,23 +110,95 @@ public interface PythonVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPrint_stmt(PythonParser.Print_stmtContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PythonParser#comp_op}.
+	 * Visit a parse tree produced by {@link PythonParser#lookup}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitComp_op(PythonParser.Comp_opContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link PythonParser#add_op}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAdd_op(PythonParser.Add_opContext ctx);
+	T visitLookup(PythonParser.LookupContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PythonParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitExpr(PythonParser.ExprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#logicOp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLogicOp(PythonParser.LogicOpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#notOp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNotOp(PythonParser.NotOpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#compareExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCompareExpression(PythonParser.CompareExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#notExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNotExpression(PythonParser.NotExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#relOp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRelOp(PythonParser.RelOpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#addOp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAddOp(PythonParser.AddOpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#mulOp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMulOp(PythonParser.MulOpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#simpleExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSimpleExpression(PythonParser.SimpleExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#term}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTerm(PythonParser.TermContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#factor}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFactor(PythonParser.FactorContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#variableFactor}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVariableFactor(PythonParser.VariableFactorContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#variable}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVariable(PythonParser.VariableContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#string}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitString(PythonParser.StringContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PythonParser#number}.
 	 * @param ctx the parse tree

@@ -1,4 +1,4 @@
-package python.executor;
+package python.intermediate;
 
 import python.type.Typespec.*;
 
@@ -20,6 +20,8 @@ public class SymEntry {
     private void createDS(Object data) {
         if (type == Typespec.STRING || type == Typespec.INTEGER || type == Typespec.FLOAT) {
             data = new Primitive(data);
+        } else if (type == Typespec.LIST) {
+            data = new List(data);
         }
     }
 
@@ -28,7 +30,7 @@ public class SymEntry {
     }
 
     public Object getData() {
-        return data;
+        return data.getData();
     }
 
     public void setName(String name) {
@@ -81,6 +83,7 @@ public class SymEntry {
 
         @Override
         public Object getData() {
+            System.out.println("hi!");
             return list;
         }
 
