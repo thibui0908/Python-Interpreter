@@ -164,6 +164,19 @@ public class Executor extends PythonBaseVisitor<Object> {
     }
 
     @Override
+    public Object visitNotExpression(NotExpressionContext ctx) {
+        Object operand1 = visit(ctx.simpleExpression());
+
+        if (ctx.notOp() == null) {
+            return operand1;
+        }
+
+        ctx.type = ctx.simpleExpression().type;
+
+        return !((Boolean) operand1);
+    }
+
+    @Override
     public Object visitWhile_stmt(While_stmtContext ctx) {
         boolean test = (boolean) visit(ctx.test());
         while (test) {
