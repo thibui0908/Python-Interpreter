@@ -181,16 +181,6 @@ public interface PythonListener extends ParseTreeListener {
 	 */
 	void exitLookup(PythonParser.LookupContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PythonParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpr(PythonParser.ExprContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PythonParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpr(PythonParser.ExprContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link PythonParser#logicOp}.
 	 * @param ctx the parse tree
 	 */
@@ -210,26 +200,6 @@ public interface PythonListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNotOp(PythonParser.NotOpContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link PythonParser#compareExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterCompareExpression(PythonParser.CompareExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PythonParser#compareExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitCompareExpression(PythonParser.CompareExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link PythonParser#notExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterNotExpression(PythonParser.NotExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PythonParser#notExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitNotExpression(PythonParser.NotExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PythonParser#relOp}.
 	 * @param ctx the parse tree
@@ -260,6 +230,46 @@ public interface PythonListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMulOp(PythonParser.MulOpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#negative}.
+	 * @param ctx the parse tree
+	 */
+	void enterNegative(PythonParser.NegativeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#negative}.
+	 * @param ctx the parse tree
+	 */
+	void exitNegative(PythonParser.NegativeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpr(PythonParser.ExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpr(PythonParser.ExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#compareExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterCompareExpression(PythonParser.CompareExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#compareExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitCompareExpression(PythonParser.CompareExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#notExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterNotExpression(PythonParser.NotExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#notExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitNotExpression(PythonParser.NotExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PythonParser#simpleExpression}.
 	 * @param ctx the parse tree

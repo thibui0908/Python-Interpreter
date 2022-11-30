@@ -26,7 +26,7 @@ public class PythonLexer extends Lexer {
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
-		T__24=25, T__25=26, T__26=27, NEG=28, FLOAT=29, STRING=30, INTEGER=31, 
+		T__24=25, T__25=26, T__26=27, T__27=28, FLOAT=29, STRING=30, INTEGER=31, 
 		NEWLINE=32, NAME=33, STRING_LITERAL=34, DECIMAL_INTEGER=35, OPEN_PAREN=36, 
 		CLOSE_PAREN=37, OPEN_BRACK=38, CLOSE_BRACK=39, OPEN_BRACE=40, CLOSE_BRACE=41, 
 		SKIP_=42, UNKNOWN_CHAR=43;
@@ -43,7 +43,7 @@ public class PythonLexer extends Lexer {
 			"T__0", "T__1", "T__2", "T__3", "T__4", "T__5", "T__6", "T__7", "T__8", 
 			"T__9", "T__10", "T__11", "T__12", "T__13", "T__14", "T__15", "T__16", 
 			"T__17", "T__18", "T__19", "T__20", "T__21", "T__22", "T__23", "T__24", 
-			"T__25", "T__26", "NEG", "FLOAT", "STRING", "INTEGER", "NEWLINE", "NAME", 
+			"T__25", "T__26", "T__27", "FLOAT", "STRING", "INTEGER", "NEWLINE", "NAME", 
 			"STRING_LITERAL", "DECIMAL_INTEGER", "OPEN_PAREN", "CLOSE_PAREN", "OPEN_BRACK", 
 			"CLOSE_BRACK", "OPEN_BRACE", "CLOSE_BRACE", "SKIP_", "UNKNOWN_CHAR", 
 			"NON_ZERO_DIGIT", "DIGIT", "SPACES", "COMMENT", "LINE_JOINING", "ID_START", 
@@ -56,8 +56,8 @@ public class PythonLexer extends Lexer {
 		return new String[] {
 			null, "'='", "'break'", "'continue'", "','", "'if'", "':'", "'elif'", 
 			"'else'", "'while'", "'print'", "'AND'", "'and'", "'OR'", "'or'", "'not'", 
-			"'NOT'", "'=='", "'!='", "'<'", "'<='", "'>'", "'>='", "'+'", "'*'", 
-			"'/'", "'//'", "'%'", "'-'", null, null, null, null, null, null, null, 
+			"'NOT'", "'=='", "'!='", "'<'", "'<='", "'>'", "'>='", "'+'", "'-'", 
+			"'*'", "'/'", "'//'", "'%'", null, null, null, null, null, null, null, 
 			"'('", "')'", "'['", "']'", "'{'", "'}'"
 		};
 	}
@@ -66,7 +66,7 @@ public class PythonLexer extends Lexer {
 		return new String[] {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, null, null, "NEG", "FLOAT", "STRING", "INTEGER", "NEWLINE", 
+			null, null, null, null, null, "FLOAT", "STRING", "INTEGER", "NEWLINE", 
 			"NAME", "STRING_LITERAL", "DECIMAL_INTEGER", "OPEN_PAREN", "CLOSE_PAREN", 
 			"OPEN_BRACK", "CLOSE_BRACK", "OPEN_BRACE", "CLOSE_BRACE", "SKIP_", "UNKNOWN_CHAR"
 		};
@@ -347,7 +347,7 @@ public class PythonLexer extends Lexer {
 		"\u0001\u0011\u0001\u0011\u0001\u0012\u0001\u0012\u0001\u0013\u0001\u0013"+
 		"\u0001\u0013\u0001\u0014\u0001\u0014\u0001\u0015\u0001\u0015\u0001\u0015"+
 		"\u0001\u0016\u0001\u0016\u0001\u0017\u0001\u0017\u0001\u0018\u0001\u0018"+
-		"\u0001\u0019\u0001\u0019\u0001\u0019\u0001\u001a\u0001\u001a\u0001\u001b"+
+		"\u0001\u0019\u0001\u0019\u0001\u001a\u0001\u001a\u0001\u001a\u0001\u001b"+
 		"\u0001\u001b\u0001\u001c\u0001\u001c\u0001\u001c\u0001\u001c\u0001\u001d"+
 		"\u0001\u001d\u0001\u001e\u0001\u001e\u0001\u001f\u0003\u001f\u00d0\b\u001f"+
 		"\u0001\u001f\u0001\u001f\u0003\u001f\u00d4\b\u001f\u0001\u001f\u0003\u001f"+
@@ -397,7 +397,7 @@ public class PythonLexer extends Lexer {
 		"\u0000%\u00af\u0001\u0000\u0000\u0000\'\u00b1\u0001\u0000\u0000\u0000"+
 		")\u00b4\u0001\u0000\u0000\u0000+\u00b6\u0001\u0000\u0000\u0000-\u00b9"+
 		"\u0001\u0000\u0000\u0000/\u00bb\u0001\u0000\u0000\u00001\u00bd\u0001\u0000"+
-		"\u0000\u00003\u00bf\u0001\u0000\u0000\u00005\u00c2\u0001\u0000\u0000\u0000"+
+		"\u0000\u00003\u00bf\u0001\u0000\u0000\u00005\u00c1\u0001\u0000\u0000\u0000"+
 		"7\u00c4\u0001\u0000\u0000\u00009\u00c6\u0001\u0000\u0000\u0000;\u00ca"+
 		"\u0001\u0000\u0000\u0000=\u00cc\u0001\u0000\u0000\u0000?\u00d3\u0001\u0000"+
 		"\u0000\u0000A\u00d8\u0001\u0000\u0000\u0000C\u00df\u0001\u0000\u0000\u0000"+
@@ -442,11 +442,11 @@ public class PythonLexer extends Lexer {
 		"=\u0000\u0000\u00b3(\u0001\u0000\u0000\u0000\u00b4\u00b5\u0005>\u0000"+
 		"\u0000\u00b5*\u0001\u0000\u0000\u0000\u00b6\u00b7\u0005>\u0000\u0000\u00b7"+
 		"\u00b8\u0005=\u0000\u0000\u00b8,\u0001\u0000\u0000\u0000\u00b9\u00ba\u0005"+
-		"+\u0000\u0000\u00ba.\u0001\u0000\u0000\u0000\u00bb\u00bc\u0005*\u0000"+
-		"\u0000\u00bc0\u0001\u0000\u0000\u0000\u00bd\u00be\u0005/\u0000\u0000\u00be"+
-		"2\u0001\u0000\u0000\u0000\u00bf\u00c0\u0005/\u0000\u0000\u00c0\u00c1\u0005"+
-		"/\u0000\u0000\u00c14\u0001\u0000\u0000\u0000\u00c2\u00c3\u0005%\u0000"+
-		"\u0000\u00c36\u0001\u0000\u0000\u0000\u00c4\u00c5\u0005-\u0000\u0000\u00c5"+
+		"+\u0000\u0000\u00ba.\u0001\u0000\u0000\u0000\u00bb\u00bc\u0005-\u0000"+
+		"\u0000\u00bc0\u0001\u0000\u0000\u0000\u00bd\u00be\u0005*\u0000\u0000\u00be"+
+		"2\u0001\u0000\u0000\u0000\u00bf\u00c0\u0005/\u0000\u0000\u00c04\u0001"+
+		"\u0000\u0000\u0000\u00c1\u00c2\u0005/\u0000\u0000\u00c2\u00c3\u0005/\u0000"+
+		"\u0000\u00c36\u0001\u0000\u0000\u0000\u00c4\u00c5\u0005%\u0000\u0000\u00c5"+
 		"8\u0001\u0000\u0000\u0000\u00c6\u00c7\u0003E\"\u0000\u00c7\u00c8\u0005"+
 		".\u0000\u0000\u00c8\u00c9\u0003E\"\u0000\u00c9:\u0001\u0000\u0000\u0000"+
 		"\u00ca\u00cb\u0003C!\u0000\u00cb<\u0001\u0000\u0000\u0000\u00cc\u00cd"+

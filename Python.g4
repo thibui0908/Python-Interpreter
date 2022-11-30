@@ -272,26 +272,26 @@ print_stmt:
 
 lookup: NAME OPEN_BRACK expr CLOSE_BRACK;
 
+logicOp: 'AND' | 'and' | 'OR' | 'or';
+notOp: 'not' | 'NOT';
+relOp: '==' | '!=' | '<' | '<=' | '>' | '>=';
+addOp: '+' | '-';
+mulOp: '*' | '/' | '//' | '%';
+negative: '-';
+
 expr
 	locals[ Typespec type = null]:
 	compareExpression (logicOp compareExpression)?;
 
-logicOp: 'AND' | 'and' | 'OR' | 'or';
-notOp: 'not' | 'NOT';
 compareExpression
 	locals[ Typespec type = null]:
 	notExpression (relOp notExpression)?;
+
 notExpression
 	locals[ Typespec type = null]:
-	notOp simpleExpression
-	| simpleExpression;
+	notOp? simpleExpression;
 
-relOp: '==' | '!=' | '<' | '<=' | '>' | '>=';
-addOp: '+' | '-';
-mulOp: '*' | '/' | '//' | '%';
-NEG: '-';
-
-simpleExpression: NEG? term (addOp term)*;
+simpleExpression locals[ Typespec type = null]: negative? term (addOp term)*;
 
 term
 	locals[ Typespec type = null]: factor (mulOp factor)*;

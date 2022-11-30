@@ -116,12 +116,6 @@ public interface PythonVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLookup(PythonParser.LookupContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PythonParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExpr(PythonParser.ExprContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link PythonParser#logicOp}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -133,18 +127,6 @@ public interface PythonVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitNotOp(PythonParser.NotOpContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link PythonParser#compareExpression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCompareExpression(PythonParser.CompareExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link PythonParser#notExpression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNotExpression(PythonParser.NotExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PythonParser#relOp}.
 	 * @param ctx the parse tree
@@ -163,6 +145,30 @@ public interface PythonVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitMulOp(PythonParser.MulOpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#negative}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNegative(PythonParser.NegativeContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpr(PythonParser.ExprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#compareExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCompareExpression(PythonParser.CompareExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#notExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNotExpression(PythonParser.NotExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PythonParser#simpleExpression}.
 	 * @param ctx the parse tree
