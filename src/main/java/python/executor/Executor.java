@@ -102,7 +102,7 @@ public class Executor extends PythonBaseVisitor<Object> {
     @Override
     public Object visitCompareExpression(CompareExpressionContext ctx) {
         Object operand1 = visit(ctx.notExpression(0));
-
+        ctx.type = ctx.notExpression(0).type;
         if (ctx.relOp() == null) {
             return operand1;
         }
@@ -114,7 +114,7 @@ public class Executor extends PythonBaseVisitor<Object> {
         Typespec type2 = ctx.notExpression(1).type;
 
         if (type1 == Typespec.INTEGER && type2 == Typespec.INTEGER) {
-            ctx.type = Typespec.INTEGER;
+            ctx.type = Typespec.BOOLEAN;
 
             if (op.equals("==")) {
                 operand1 = (long) operand1 == (long) operand2;
@@ -130,14 +130,14 @@ public class Executor extends PythonBaseVisitor<Object> {
                 operand1 = (long) operand1 <= (long) operand2;
             }
         } else if (type1 == Typespec.STRING && type2 == Typespec.STRING) {
-            ctx.type = Typespec.STRING;
+            ctx.type = Typespec.BOOLEAN;
             if (op.equals("==")) {
                 operand1 = ((String) operand1).equals((String) operand2);
             } else {
                 operand1 = !((String) operand1).equals((String) operand2);;
             }
         } else {
-            ctx.type = Typespec.FLOAT;
+            ctx.type = Typespec.BOOLEAN;
             if (type2 == Typespec.FLOAT) {
                 Object tmp = operand1;
                 operand1 = operand2;
@@ -166,14 +166,53 @@ public class Executor extends PythonBaseVisitor<Object> {
     @Override
     public Object visitNotExpression(NotExpressionContext ctx) {
         Object operand1 = visit(ctx.simpleExpression());
+        ctx.type = ctx.simpleExpression().type;
 
         if (ctx.notOp() == null) {
             return operand1;
         }
 
-        ctx.type = ctx.simpleExpression().type;
+        ctx.type = Typespec.BOOLEAN;
 
         return !((Boolean) operand1);
+    }
+
+    @Override
+    public Object visitSimpleExpression(SimpleExpressionContext ctx) {
+        Object operand1 = visit(ctx.term(0));
+        ctx.type = ctx.term(0).type;
+
+        if (ctx.addOp() == null) {
+            return operand1;
+        }
+
+        Typespec type1 = ctx.term(0).type;
+
+        for (int i = 1; i < ctx.term().size(); i++) {
+            String op = ctx.addOp(i - 1).getText();
+            Object operand2 = visit(ctx.term(i));
+            Typespec type2 = ctx.term(i).type;
+
+            if (type1 == Typespec.INTEGER && type2 == Typespec.INTEGER) {
+                ctx.type = Typespec.INTEGER;
+                operand1 = op.equals("+")
+                        ? (Long) operand1 + (Long) operand2
+                        : (Long) operand1 - (Long) operand2;
+            } else if (type1 == Typespec.STRING && type2 == Typespec.STRING) {
+                ctx.type = Typespec.STRING;
+                operand1 = (String) operand1 + (String) operand2;
+            } else {
+                if (type2 == Typespec.FLOAT) {
+                    Object tmp = operand1;
+                    operand1 = operand2;
+                    operand2 = tmp;
+                }
+                ctx.type = Typespec.FLOAT;
+                operand1 = (Double) operand1 + ((Long) operand2).doubleValue();
+            }
+        }
+
+        return operand1;
     }
 
     @Override

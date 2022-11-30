@@ -1741,9 +1741,6 @@ public class PythonParser extends Parser {
 		public TermContext term(int i) {
 			return getRuleContext(TermContext.class,i);
 		}
-		public NegativeContext negative() {
-			return getRuleContext(NegativeContext.class,0);
-		}
 		public List<AddOpContext> addOp() {
 			return getRuleContexts(AddOpContext.class);
 		}
@@ -1776,31 +1773,21 @@ public class PythonParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(207);
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			if (_la==T__23) {
-				{
-				setState(206);
-				negative();
-				}
-			}
-
-			setState(209);
+			setState(206);
 			term();
-			setState(215);
+			setState(212);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__22 || _la==T__23) {
 				{
 				{
-				setState(210);
+				setState(207);
 				addOp();
-				setState(211);
+				setState(208);
 				term();
 				}
 				}
-				setState(217);
+				setState(214);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -1858,21 +1845,21 @@ public class PythonParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(218);
+			setState(215);
 			factor();
-			setState(224);
+			setState(221);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 503316480L) != 0) {
 				{
 				{
-				setState(219);
+				setState(216);
 				mulOp();
-				setState(220);
+				setState(217);
 				factor();
 				}
 				}
-				setState(226);
+				setState(223);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -1906,6 +1893,9 @@ public class PythonParser extends Parser {
 			return getRuleContext(ExprContext.class,0);
 		}
 		public TerminalNode CLOSE_PAREN() { return getToken(PythonParser.CLOSE_PAREN, 0); }
+		public NegativeContext negative() {
+			return getRuleContext(NegativeContext.class,0);
+		}
 		public FactorContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1928,12 +1918,24 @@ public class PythonParser extends Parser {
 	public final FactorContext factor() throws RecognitionException {
 		FactorContext _localctx = new FactorContext(_ctx, getState());
 		enterRule(_localctx, 56, RULE_factor);
+		int _la;
 		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(225);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==T__23) {
+				{
+				setState(224);
+				negative();
+				}
+			}
+
 			setState(234);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case NAME:
-				enterOuterAlt(_localctx, 1);
 				{
 				setState(227);
 				variableFactor();
@@ -1941,21 +1943,18 @@ public class PythonParser extends Parser {
 				break;
 			case FLOAT:
 			case INTEGER:
-				enterOuterAlt(_localctx, 2);
 				{
 				setState(228);
 				number();
 				}
 				break;
 			case STRING_LITERAL:
-				enterOuterAlt(_localctx, 3);
 				{
 				setState(229);
 				string();
 				}
 				break;
 			case OPEN_PAREN:
-				enterOuterAlt(_localctx, 4);
 				{
 				setState(230);
 				match(OPEN_PAREN);
@@ -1967,6 +1966,7 @@ public class PythonParser extends Parser {
 				break;
 			default:
 				throw new NoViableAltException(this);
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -2201,10 +2201,10 @@ public class PythonParser extends Parser {
 		"\u0014\u0001\u0015\u0001\u0015\u0001\u0016\u0001\u0016\u0001\u0017\u0001"+
 		"\u0017\u0001\u0017\u0001\u0017\u0003\u0017\u00c2\b\u0017\u0001\u0018\u0001"+
 		"\u0018\u0001\u0018\u0001\u0018\u0003\u0018\u00c8\b\u0018\u0001\u0019\u0003"+
-		"\u0019\u00cb\b\u0019\u0001\u0019\u0001\u0019\u0001\u001a\u0003\u001a\u00d0"+
-		"\b\u001a\u0001\u001a\u0001\u001a\u0001\u001a\u0001\u001a\u0005\u001a\u00d6"+
-		"\b\u001a\n\u001a\f\u001a\u00d9\t\u001a\u0001\u001b\u0001\u001b\u0001\u001b"+
-		"\u0001\u001b\u0005\u001b\u00df\b\u001b\n\u001b\f\u001b\u00e2\t\u001b\u0001"+
+		"\u0019\u00cb\b\u0019\u0001\u0019\u0001\u0019\u0001\u001a\u0001\u001a\u0001"+
+		"\u001a\u0001\u001a\u0005\u001a\u00d3\b\u001a\n\u001a\f\u001a\u00d6\t\u001a"+
+		"\u0001\u001b\u0001\u001b\u0001\u001b\u0001\u001b\u0005\u001b\u00dc\b\u001b"+
+		"\n\u001b\f\u001b\u00df\t\u001b\u0001\u001c\u0003\u001c\u00e2\b\u001c\u0001"+
 		"\u001c\u0001\u001c\u0001\u001c\u0001\u001c\u0001\u001c\u0001\u001c\u0001"+
 		"\u001c\u0003\u001c\u00eb\b\u001c\u0001\u001d\u0001\u001d\u0001\u001e\u0001"+
 		"\u001e\u0001\u001f\u0001\u001f\u0001 \u0001 \u0001 \u0000\u0000!\u0000"+
@@ -2223,8 +2223,8 @@ public class PythonParser extends Parser {
 		"\u0000&\u00b5\u0001\u0000\u0000\u0000(\u00b7\u0001\u0000\u0000\u0000*"+
 		"\u00b9\u0001\u0000\u0000\u0000,\u00bb\u0001\u0000\u0000\u0000.\u00bd\u0001"+
 		"\u0000\u0000\u00000\u00c3\u0001\u0000\u0000\u00002\u00ca\u0001\u0000\u0000"+
-		"\u00004\u00cf\u0001\u0000\u0000\u00006\u00da\u0001\u0000\u0000\u00008"+
-		"\u00ea\u0001\u0000\u0000\u0000:\u00ec\u0001\u0000\u0000\u0000<\u00ee\u0001"+
+		"\u00004\u00ce\u0001\u0000\u0000\u00006\u00d7\u0001\u0000\u0000\u00008"+
+		"\u00e1\u0001\u0000\u0000\u0000:\u00ec\u0001\u0000\u0000\u0000<\u00ee\u0001"+
 		"\u0000\u0000\u0000>\u00f0\u0001\u0000\u0000\u0000@\u00f2\u0001\u0000\u0000"+
 		"\u0000BH\u0005 \u0000\u0000CH\u0003\u0006\u0003\u0000DE\u0003\u0014\n"+
 		"\u0000EF\u0005 \u0000\u0000FH\u0001\u0000\u0000\u0000GB\u0001\u0000\u0000"+
@@ -2293,17 +2293,17 @@ public class PythonParser extends Parser {
 		"\u0000\u0000\u0000\u00c9\u00cb\u0003$\u0012\u0000\u00ca\u00c9\u0001\u0000"+
 		"\u0000\u0000\u00ca\u00cb\u0001\u0000\u0000\u0000\u00cb\u00cc\u0001\u0000"+
 		"\u0000\u0000\u00cc\u00cd\u00034\u001a\u0000\u00cd3\u0001\u0000\u0000\u0000"+
-		"\u00ce\u00d0\u0003,\u0016\u0000\u00cf\u00ce\u0001\u0000\u0000\u0000\u00cf"+
-		"\u00d0\u0001\u0000\u0000\u0000\u00d0\u00d1\u0001\u0000\u0000\u0000\u00d1"+
-		"\u00d7\u00036\u001b\u0000\u00d2\u00d3\u0003(\u0014\u0000\u00d3\u00d4\u0003"+
-		"6\u001b\u0000\u00d4\u00d6\u0001\u0000\u0000\u0000\u00d5\u00d2\u0001\u0000"+
-		"\u0000\u0000\u00d6\u00d9\u0001\u0000\u0000\u0000\u00d7\u00d5\u0001\u0000"+
-		"\u0000\u0000\u00d7\u00d8\u0001\u0000\u0000\u0000\u00d85\u0001\u0000\u0000"+
-		"\u0000\u00d9\u00d7\u0001\u0000\u0000\u0000\u00da\u00e0\u00038\u001c\u0000"+
-		"\u00db\u00dc\u0003*\u0015\u0000\u00dc\u00dd\u00038\u001c\u0000\u00dd\u00df"+
-		"\u0001\u0000\u0000\u0000\u00de\u00db\u0001\u0000\u0000\u0000\u00df\u00e2"+
-		"\u0001\u0000\u0000\u0000\u00e0\u00de\u0001\u0000\u0000\u0000\u00e0\u00e1"+
-		"\u0001\u0000\u0000\u0000\u00e17\u0001\u0000\u0000\u0000\u00e2\u00e0\u0001"+
+		"\u00ce\u00d4\u00036\u001b\u0000\u00cf\u00d0\u0003(\u0014\u0000\u00d0\u00d1"+
+		"\u00036\u001b\u0000\u00d1\u00d3\u0001\u0000\u0000\u0000\u00d2\u00cf\u0001"+
+		"\u0000\u0000\u0000\u00d3\u00d6\u0001\u0000\u0000\u0000\u00d4\u00d2\u0001"+
+		"\u0000\u0000\u0000\u00d4\u00d5\u0001\u0000\u0000\u0000\u00d55\u0001\u0000"+
+		"\u0000\u0000\u00d6\u00d4\u0001\u0000\u0000\u0000\u00d7\u00dd\u00038\u001c"+
+		"\u0000\u00d8\u00d9\u0003*\u0015\u0000\u00d9\u00da\u00038\u001c\u0000\u00da"+
+		"\u00dc\u0001\u0000\u0000\u0000\u00db\u00d8\u0001\u0000\u0000\u0000\u00dc"+
+		"\u00df\u0001\u0000\u0000\u0000\u00dd\u00db\u0001\u0000\u0000\u0000\u00dd"+
+		"\u00de\u0001\u0000\u0000\u0000\u00de7\u0001\u0000\u0000\u0000\u00df\u00dd"+
+		"\u0001\u0000\u0000\u0000\u00e0\u00e2\u0003,\u0016\u0000\u00e1\u00e0\u0001"+
+		"\u0000\u0000\u0000\u00e1\u00e2\u0001\u0000\u0000\u0000\u00e2\u00ea\u0001"+
 		"\u0000\u0000\u0000\u00e3\u00eb\u0003:\u001d\u0000\u00e4\u00eb\u0003@ "+
 		"\u0000\u00e5\u00eb\u0003>\u001f\u0000\u00e6\u00e7\u0005$\u0000\u0000\u00e7"+
 		"\u00e8\u0003.\u0017\u0000\u00e8\u00e9\u0005%\u0000\u0000\u00e9\u00eb\u0001"+
@@ -2314,7 +2314,7 @@ public class PythonParser extends Parser {
 		"=\u0001\u0000\u0000\u0000\u00f0\u00f1\u0005\"\u0000\u0000\u00f1?\u0001"+
 		"\u0000\u0000\u0000\u00f2\u00f3\u0007\u0005\u0000\u0000\u00f3A\u0001\u0000"+
 		"\u0000\u0000\u0016GKMT\\`gsv|\u0089\u008f\u009c\u00a0\u00a8\u00c1\u00c7"+
-		"\u00ca\u00cf\u00d7\u00e0\u00ea";
+		"\u00ca\u00d4\u00dd\u00e1\u00ea";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -291,17 +291,19 @@ notExpression
 	locals[ Typespec type = null]:
 	notOp? simpleExpression;
 
-simpleExpression locals[ Typespec type = null]: negative? term (addOp term)*;
+simpleExpression
+    locals[ Typespec type = null]:
+     term (addOp term)*;
 
 term
 	locals[ Typespec type = null]: factor (mulOp factor)*;
 
 factor
 	locals[ Typespec type = null]:
-	variableFactor
+	negative? (variableFactor
 	| number
 	| string
-	| '(' expr ')';
+	| '(' expr ')');
 
 variableFactor
 	locals[ Typespec type = null ]: variable;
