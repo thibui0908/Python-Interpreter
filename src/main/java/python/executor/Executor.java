@@ -43,7 +43,6 @@ public class Executor extends PythonBaseVisitor<Object> {
 
         Boolean result = op.equals("and")   ? boper1 && boper2
                                             : boper1 || boper2;
-
         return result;
 
 
@@ -98,6 +97,70 @@ public class Executor extends PythonBaseVisitor<Object> {
 //            }
 //        }
 //        return operand1;
+    }
+
+    @Override
+    public Object visitCompareExpression(CompareExpressionContext ctx) {
+        Object operand1 = visit(ctx.notExpression(0));
+
+        if (ctx.relOp() == null) {
+            return operand1;
+        }
+
+        String op = ctx.relOp().getText();
+        Object operand2 = visit(ctx.notExpression(1));
+
+        Typespec type1 = ctx.notExpression(0).type;
+        Typespec type2 = ctx.notExpression(1).type;
+
+        if (type1 == Typespec.INTEGER && type2 == Typespec.INTEGER) {
+            ctx.type = Typespec.INTEGER;
+
+            if (op.equals("==")) {
+                operand1 = (long) operand1 == (long) operand2;
+            } else if (op.equals("!=")) {
+                operand1 = (long) operand1 != (long) operand2;
+            } else if (op.equals("<")) {
+                operand1 = (long) operand1 < (long) operand2;
+            } else if (op.equals(">")) {
+                operand1 = (long) operand1 > (long) operand2;
+            } else if (op.equals(">=")) {
+                operand1 = (long) operand1 >= (long) operand2;
+            } else if (op.equals("<=")) {
+                operand1 = (long) operand1 <= (long) operand2;
+            }
+        } else if (type1 == Typespec.STRING && type2 == Typespec.STRING) {
+            ctx.type = Typespec.STRING;
+            if (op.equals("==")) {
+                operand1 = ((String) operand1).equals((String) operand2);
+            } else {
+                operand1 = !((String) operand1).equals((String) operand2);;
+            }
+        } else {
+            ctx.type = Typespec.FLOAT;
+            if (type2 == Typespec.FLOAT) {
+                Object tmp = operand1;
+                operand1 = operand2;
+                operand2 = tmp;
+            }
+            Double ope1 = (Double) operand1;
+            Double ope2 = ((Long) operand2).doubleValue();
+            if (op.equals("==")) {
+                operand1 = (double) ope1  == ope2;
+            } else if (op.equals("!=")) {
+                operand1 = (double) ope1 != ope2;
+            } else if (op.equals("<")) {
+                operand1 = (double) ope1 < ope2;
+            } else if (op.equals(">")) {
+                operand1 = (double) ope1 > ope2;
+            } else if (op.equals(">=")) {
+                operand1 = (double) ope1 >= ope2;
+            } else if (op.equals("<=")) {
+                operand1 = (double) ope1 <= ope2;
+            }
+        }
+
+        return operand1;
     }
 
     @Override
