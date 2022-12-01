@@ -208,11 +208,51 @@ public class Executor extends PythonBaseVisitor<Object> {
                     operand2 = tmp;
                 }
                 ctx.type = Typespec.FLOAT;
-                operand1 = (Double) operand1 + ((Long) operand2).doubleValue();
+                operand1 = op.equals("+")   ? (Double) operand1 + ((Long) operand2).doubleValue()
+                                            : (Double) operand1 - ((Long) operand2).doubleValue();
             }
         }
 
         return operand1;
+    }
+
+    @Override
+    public Object visitTerm(TermContext ctx) {
+        Object operand1 = visit(ctx.factor(0));
+        ctx.type = ctx.factor(0).type;
+
+        if (ctx.mulOp() == null) {
+            return operand1;
+        }
+        Typespec type1 = ctx.factor(0).type;
+
+        for (int i = 1; i < ctx.factor().size(); i++) {
+            String op = ctx.mulOp(i - 1).getText();
+            Object operand2 = visit(ctx.factor(i));
+            Typespec type2 = ctx.factor(i).type;
+
+            if (type1 == Typespec.INTEGER && type2 == Typespec.INTEGER) {
+                ctx.type = Typespec.INTEGER;
+                operand1 = op.equals("*")
+                        ? (Long) operand1 * (Long) operand2
+                        : (Long) operand1 / (Long) operand2;
+            } else if (type1 != Typespec.STRING || type2 != Typespec.STRING){
+                if (type2 == Typespec.FLOAT) {
+                    Object tmp = operand1;
+                    operand1 = operand2;
+                    operand2 = tmp;
+                }
+                ctx.type = Typespec.FLOAT;
+                operand1 = op.equals("*")   ? (Double) operand1 * ((Long) operand2).doubleValue()
+                                            : (Double) operand1 / ((Long) operand2).doubleValue();
+            }
+        }
+        return operand1;
+    }
+
+    @Override
+    public Object visitFactor(FactorContext ctx) {
+        return super.visitFactor(ctx);
     }
 
     @Override
