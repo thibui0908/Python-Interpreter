@@ -19,9 +19,9 @@ public class SymEntry {
 
     private void createDS(Object data) {
         if (type == Typespec.STRING || type == Typespec.INTEGER || type == Typespec.FLOAT) {
-            data = new Primitive(data);
+            this.data = new Primitive(data);
         } else if (type == Typespec.LIST) {
-            data = new List(data);
+            this.data = new List(data);
         }
     }
 
@@ -38,7 +38,7 @@ public class SymEntry {
     }
 
     public void setData(Object data) {
-
+        this.data.setData(data);
     }
 
     public Typespec getType() {

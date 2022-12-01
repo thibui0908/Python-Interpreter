@@ -1,2 +1,9 @@
-l = [1,2,3,4,5]
-print(l[0])
+first = 1
+second = 1
+n = 1
+while n != 10:
+    tmp = second
+    second = first + second
+    first = tmp
+    n = n + 1
+print(first)

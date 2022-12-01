@@ -288,28 +288,22 @@ compareExpression
 	notExpression (relOp notExpression)?;
 
 notExpression
-	locals[ Typespec type = null]:
-	notOp? simpleExpression;
+	locals[ Typespec type = null]: notOp? simpleExpression;
 
 simpleExpression
-    locals[ Typespec type = null]:
-     term (addOp term)*;
+	locals[ Typespec type = null]: term (addOp term)*;
 
 term
 	locals[ Typespec type = null]: factor (mulOp factor)*;
 
 factor
 	locals[ Typespec type = null]:
-	negative? (variableFactor
-	| number
-	| string
-	| '(' expr ')');
+	negative? (variableFactor | number | string | '(' expr ')');
 
 variableFactor
 	locals[ Typespec type = null ]: variable;
 variable
-	locals[ Typespec type = null, SymtabEntry entry = null ]:
-	NAME;
+	locals[ Typespec type = null ]: NAME;
 
 string
 	locals[ Typespec type = null]: STRING_LITERAL;

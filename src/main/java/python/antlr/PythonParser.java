@@ -2029,7 +2029,6 @@ public class PythonParser extends Parser {
 	@SuppressWarnings("CheckReturnValue")
 	public static class VariableContext extends ParserRuleContext {
 		public Typespec type = null;
-		public SymtabEntry entry = null;
 		public TerminalNode NAME() { return getToken(PythonParser.NAME, 0); }
 		public VariableContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
