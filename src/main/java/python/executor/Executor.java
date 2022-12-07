@@ -16,6 +16,23 @@ public class Executor extends PythonBaseVisitor<Object> {
     }
 
     @Override
+    public Object visitIf_stmt(If_stmtContext ctx) {
+        for(int i = 0 ; i < ctx.test().size(); i++) {
+            if((boolean) visit(ctx.test(i))) {
+                visit(ctx.suite(i));
+                return null;
+            }
+        }
+        if(ctx.test().size() < ctx.suite().size()) visit(ctx.suite(ctx.suite().size()-1));
+        return null;
+    }
+
+    @Override
+    public Object visitTest(TestContext ctx) {
+        return visit(ctx.expr());
+    }
+
+    @Override
     public Object visitAssignment_stmt(Assignment_stmtContext ctx) {
         String variable = ctx.NAME().getText();
         Object data = visit(ctx.expr());
@@ -61,9 +78,9 @@ public class Executor extends PythonBaseVisitor<Object> {
         Typespec type1 = ctx.notExpression(0).type;
         Typespec type2 = ctx.notExpression(1).type;
 
+
         if (type1 == Typespec.INTEGER && type2 == Typespec.INTEGER) {
             ctx.type = Typespec.BOOLEAN;
-
             if (op.equals("==")) {
                 operand1 = (long) operand1 == (long) operand2;
             } else if (op.equals("!=")) {
@@ -222,6 +239,10 @@ public class Executor extends PythonBaseVisitor<Object> {
             Object ret = visit(ctx.expr());
             ctx.type = ctx.expr().type;
             return ret;
+        } else if(ctx.functionCall() != null) {
+            Object ret = visit(ctx.functionCall());
+            ctx.type = ctx.functionCall().type;
+            return ret;
         }
         return null;
     }
@@ -265,6 +286,55 @@ public class Executor extends PythonBaseVisitor<Object> {
             test = (boolean) visit(ctx.test());
         }
         return null;
+    }
+
+    Object ret = null;
+    Typespec type = null;
+    @Override
+    public Object visitSuite(SuiteContext ctx) {
+        for(StmtContext stmt : ctx.stmt()) {
+            visit(stmt);
+            if(ret != null) return null;
+        }
+        return null;
+    }
+
+    @Override
+    public Object visitReturnStatement(ReturnStatementContext ctx) {
+        ret = visit(ctx.expr());
+        type = ctx.expr().type;
+        return null;
+    }
+
+    @Override
+    public Object visitFunctionDefinitionStatement(FunctionDefinitionStatementContext ctx) {
+        ctx.parameters = new ArrayList<>();
+        if(ctx.parameterList() != null) {
+            for (VariableContext pCtx : ctx.parameterList().variable()) {
+                ctx.parameters.add(pCtx.NAME().getText());
+            }
+        }
+        ctx.suiteCtx = ctx.suite();
+        stack.insert(ctx.variable().NAME().getText(), ctx, Typespec.FUNCTION);
+        return null;
+    }
+
+    @Override
+    public Object visitFunctionCall(FunctionCallContext ctx) {
+
+        stack.addStack();
+        SymEntry entry = stack.lookup(ctx.variable().getText());
+        FunctionDefinitionStatementContext fdc = (FunctionDefinitionStatementContext) entry.getData();
+        for (int i = 0; i < fdc.parameters.size(); i++) {
+            stack.insertLocal(fdc.parameters.get(i), visitExpr(ctx.expr(i)), ctx.expr(i).type);
+        }
+        visit(fdc.suiteCtx);
+        ctx.type = type;
+        type = null;
+        Object retur = ret;
+        ret = null;
+        stack.pop();
+        return retur;
     }
 
     @Override

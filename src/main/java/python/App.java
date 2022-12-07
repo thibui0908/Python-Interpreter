@@ -26,8 +26,11 @@ public class App {
 
         PythonLexer lexer = new PythonLexer(cs);
         PythonParser parser = new PythonParser(new CommonTokenStream(lexer));
+        parser.setBuildParseTree(true);
         Executor exec = new Executor();
+
         exec.visit(parser.file_input());
+
 
     }
 }

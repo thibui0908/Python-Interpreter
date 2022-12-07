@@ -101,6 +101,16 @@ public interface PythonListener extends ParseTreeListener {
 	 */
 	void exitContinue_stmt(PythonParser.Continue_stmtContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link PythonParser#returnStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterReturnStatement(PythonParser.ReturnStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#returnStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitReturnStatement(PythonParser.ReturnStatementContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link PythonParser#list}.
 	 * @param ctx the parse tree
 	 */
@@ -170,6 +180,26 @@ public interface PythonListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPrint_stmt(PythonParser.Print_stmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#functionDefinitionStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionDefinitionStatement(PythonParser.FunctionDefinitionStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#functionDefinitionStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionDefinitionStatement(PythonParser.FunctionDefinitionStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#parameterList}.
+	 * @param ctx the parse tree
+	 */
+	void enterParameterList(PythonParser.ParameterListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#parameterList}.
+	 * @param ctx the parse tree
+	 */
+	void exitParameterList(PythonParser.ParameterListContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PythonParser#lookup}.
 	 * @param ctx the parse tree
@@ -300,6 +330,16 @@ public interface PythonListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFactor(PythonParser.FactorContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#functionCall}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionCall(PythonParser.FunctionCallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#functionCall}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionCall(PythonParser.FunctionCallContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PythonParser#variableFactor}.
 	 * @param ctx the parse tree

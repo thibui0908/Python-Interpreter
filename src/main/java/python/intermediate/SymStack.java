@@ -1,10 +1,9 @@
 package python.intermediate;
 
-import java.util.ArrayList;
+import python.type.Typespec;
+
 import java.util.ListIterator;
 import java.util.Stack;
-
-import python.type.Typespec;
 
 public class SymStack {
     private Stack<SymTab> stack;
@@ -20,6 +19,10 @@ public class SymStack {
 
     public void pop() {
         stack.pop();
+    }
+
+    public void insertLocal(String key, Object data, Typespec type) {
+        stack.peek().insert(key, data, type);
     }
 
     public void insert(String key, Object data, Typespec type) {

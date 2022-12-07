@@ -128,6 +128,18 @@ public class PythonBaseListener implements PythonListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterReturnStatement(PythonParser.ReturnStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitReturnStatement(PythonParser.ReturnStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterList(PythonParser.ListContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -207,6 +219,30 @@ public class PythonBaseListener implements PythonListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitPrint_stmt(PythonParser.Print_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFunctionDefinitionStatement(PythonParser.FunctionDefinitionStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunctionDefinitionStatement(PythonParser.FunctionDefinitionStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterParameterList(PythonParser.ParameterListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitParameterList(PythonParser.ParameterListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -363,6 +399,18 @@ public class PythonBaseListener implements PythonListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFactor(PythonParser.FactorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFunctionCall(PythonParser.FunctionCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunctionCall(PythonParser.FunctionCallContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

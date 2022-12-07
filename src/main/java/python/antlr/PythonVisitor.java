@@ -68,6 +68,12 @@ public interface PythonVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitContinue_stmt(PythonParser.Continue_stmtContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link PythonParser#returnStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReturnStatement(PythonParser.ReturnStatementContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link PythonParser#list}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -109,6 +115,18 @@ public interface PythonVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitPrint_stmt(PythonParser.Print_stmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#functionDefinitionStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionDefinitionStatement(PythonParser.FunctionDefinitionStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#parameterList}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParameterList(PythonParser.ParameterListContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PythonParser#lookup}.
 	 * @param ctx the parse tree
@@ -187,6 +205,12 @@ public interface PythonVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFactor(PythonParser.FactorContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#functionCall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionCall(PythonParser.FunctionCallContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PythonParser#variableFactor}.
 	 * @param ctx the parse tree
