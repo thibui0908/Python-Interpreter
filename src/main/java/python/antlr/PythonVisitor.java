@@ -74,11 +74,19 @@ public interface PythonVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitReturnStatement(PythonParser.ReturnStatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PythonParser#list}.
+	 * Visit a parse tree produced by the {@code NList}
+	 * labeled alternative in {@link PythonParser#list}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitList(PythonParser.ListContext ctx);
+	T visitNList(PythonParser.NListContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code normalList}
+	 * labeled alternative in {@link PythonParser#list}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNormalList(PythonParser.NormalListContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PythonParser#compound_stmt}.
 	 * @param ctx the parse tree
@@ -211,6 +219,12 @@ public interface PythonVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFunctionCall(PythonParser.FunctionCallContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PythonParser#subscriptFactor}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSubscriptFactor(PythonParser.SubscriptFactorContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PythonParser#variableFactor}.
 	 * @param ctx the parse tree

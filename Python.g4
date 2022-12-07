@@ -249,30 +249,44 @@ file_input: (NEWLINE | stmt)* EOF;
 stmt: simple_stmt | compound_stmt;
 
 simple_stmt: small_stmt NEWLINE;
-small_stmt: assignment_stmt | flow_stmt | print_stmt | returnStatement | expr;
+small_stmt:
+	assignment_stmt
+	| flow_stmt
+	| print_stmt
+	| returnStatement
+	| expr;
+
 assignment_stmt: (lookup | NAME) '=' expr;
 flow_stmt: break_stmt | continue_stmt;
 break_stmt: 'break';
 continue_stmt: 'continue';
 returnStatement: 'return' expr;
 
-list: OPEN_BRACK (expr (',' expr)*)? CLOSE_BRACK;
+list: (OPEN_BRACK expr CLOSE_BRACK '*' expr)		# NList
+	| (OPEN_BRACK (expr (',' expr)*)? CLOSE_BRACK)	# normalList;
 
-compound_stmt: if_stmt | while_stmt | functionDefinitionStatement;
+compound_stmt:
+	if_stmt
+	| while_stmt
+	| functionDefinitionStatement;
 if_stmt:
 	'if' test ':' suite ('elif' test ':' suite)* (
 		'else' ':' suite
 	)?;
 while_stmt: 'while' test ':' suite;
-suite locals[Typespec type = null]: simple_stmt | NEWLINE INDENT stmt+ DEDENT;
+suite
+	locals[Typespec type = null]:
+	simple_stmt
+	| NEWLINE INDENT stmt+ DEDENT;
 
 test: expr;
 
 print_stmt:
-	'print' OPEN_PAREN (STRING | expr) CLOSE_PAREN; // only for demonstration
+	'print' OPEN_PAREN (expr) CLOSE_PAREN; // only for demonstration
 
 functionDefinitionStatement
-    locals[ SuiteContext suiteCtx, List<String> parameters]: 'def ' variable OPEN_PAREN parameterList CLOSE_PAREN ':' suite;
+	locals[ SuiteContext suiteCtx, List<String> parameters]:
+	'def ' variable OPEN_PAREN parameterList CLOSE_PAREN ':' suite;
 
 parameterList: variable*;
 
@@ -304,10 +318,23 @@ term
 
 factor
 	locals[ Typespec type = null]:
-	negative? (functionCall | variableFactor | number | string | '(' expr ')');
+	negative? (
+		functionCall
+		| subscriptFactor
+		| list
+		| variableFactor
+		| number
+		| string
+		| '(' expr ')'
+	);
 
-functionCall locals[ Typespec type = null ]: variable OPEN_PAREN expr* CLOSE_PAREN;
+functionCall
+	locals[ Typespec type = null ]:
+	variable OPEN_PAREN expr* CLOSE_PAREN;
 
+subscriptFactor
+	locals[ Typespec type = null ]:
+	variableFactor OPEN_BRACK expr CLOSE_BRACK;
 
 variableFactor
 	locals[ Typespec type = null ]: variable;
@@ -319,17 +346,7 @@ string
 number
 	locals[ Typespec type = null]: INTEGER | FLOAT;
 
-/*
- *
- */
-
-
-/*
- * lexer rules
- */
-
 FLOAT: DECIMAL_INTEGER '.' DECIMAL_INTEGER;
-
 
 INTEGER: DECIMAL_INTEGER;
 

@@ -17,13 +17,14 @@ public class Executor extends PythonBaseVisitor<Object> {
 
     @Override
     public Object visitIf_stmt(If_stmtContext ctx) {
-        for(int i = 0 ; i < ctx.test().size(); i++) {
-            if((boolean) visit(ctx.test(i))) {
+        for (int i = 0; i < ctx.test().size(); i++) {
+            if ((boolean) visit(ctx.test(i))) {
                 visit(ctx.suite(i));
                 return null;
             }
         }
-        if(ctx.test().size() < ctx.suite().size()) visit(ctx.suite(ctx.suite().size()-1));
+        if (ctx.test().size() < ctx.suite().size())
+            visit(ctx.suite(ctx.suite().size() - 1));
         return null;
     }
 
@@ -34,15 +35,22 @@ public class Executor extends PythonBaseVisitor<Object> {
 
     @Override
     public Object visitAssignment_stmt(Assignment_stmtContext ctx) {
-        String variable = ctx.NAME().getText();
         Object data = visit(ctx.expr());
+        if (ctx.lookup() != null) {
+            ArrayList<SymEntry> list = (ArrayList<SymEntry>) stack.lookup(ctx.lookup().NAME().getText()).getData();
+            SymEntry entry = list.get(((Long) visit(ctx.lookup().expr())).intValue());
+            entry.setData(data);
+            entry.setType(ctx.expr().type);
+            return null;
+        }
+        String variable = ctx.NAME().getText();
         stack.insert(variable, data, ctx.expr().type);
         return null;
     }
 
     @Override
     public Object visitPrint_stmt(Print_stmtContext ctx) {
-        Object ouput = visit(ctx.expr() != null ? ctx.expr() : ctx.STRING());
+        Object ouput = visit(ctx.expr());
         System.out.println(ouput);
         return null;
     }
@@ -77,7 +85,6 @@ public class Executor extends PythonBaseVisitor<Object> {
 
         Typespec type1 = ctx.notExpression(0).type;
         Typespec type2 = ctx.notExpression(1).type;
-
 
         if (type1 == Typespec.INTEGER && type2 == Typespec.INTEGER) {
             ctx.type = Typespec.BOOLEAN;
@@ -239,9 +246,17 @@ public class Executor extends PythonBaseVisitor<Object> {
             Object ret = visit(ctx.expr());
             ctx.type = ctx.expr().type;
             return ret;
-        } else if(ctx.functionCall() != null) {
+        } else if (ctx.functionCall() != null) {
             Object ret = visit(ctx.functionCall());
             ctx.type = ctx.functionCall().type;
+            return ret;
+        } else if (ctx.list() != null) {
+            Object ret = visit(ctx.list());
+            ctx.type = Typespec.LIST;
+            return ret;
+        } else if (ctx.subscriptFactor() != null) {
+            Object ret = visit(ctx.subscriptFactor());
+            ctx.type = ctx.subscriptFactor().type;
             return ret;
         }
         return null;
@@ -290,11 +305,13 @@ public class Executor extends PythonBaseVisitor<Object> {
 
     Object ret = null;
     Typespec type = null;
+
     @Override
     public Object visitSuite(SuiteContext ctx) {
-        for(StmtContext stmt : ctx.stmt()) {
+        for (StmtContext stmt : ctx.stmt()) {
             visit(stmt);
-            if(ret != null) return null;
+            if (ret != null)
+                return null;
         }
         return null;
     }
@@ -309,7 +326,7 @@ public class Executor extends PythonBaseVisitor<Object> {
     @Override
     public Object visitFunctionDefinitionStatement(FunctionDefinitionStatementContext ctx) {
         ctx.parameters = new ArrayList<>();
-        if(ctx.parameterList() != null) {
+        if (ctx.parameterList() != null) {
             for (VariableContext pCtx : ctx.parameterList().variable()) {
                 ctx.parameters.add(pCtx.NAME().getText());
             }
@@ -338,13 +355,34 @@ public class Executor extends PythonBaseVisitor<Object> {
     }
 
     @Override
-    public Object visitList(ListContext ctx) {
+    public Object visitSubscriptFactor(SubscriptFactorContext ctx) {
+        ArrayList<SymEntry> entries = (ArrayList<SymEntry>) visit(ctx.variableFactor());
+        int value = ((Long) visit(ctx.expr())).intValue();
+        SymEntry entry = entries.get(value);
+        ctx.type = entry.getType();
+        return entry.getData();
+    }
+
+    @Override
+    public Object visitNormalList(NormalListContext ctx) {
         ArrayList<SymEntry> list = new ArrayList<>();
         for (int i = 0; i < ctx.expr().size(); i++) {
             Object data = visit(ctx.expr(i));
             Typespec type = ctx.expr(i).type;
             list.add(new SymEntry(null, data, type));
         }
+        return list;
+    }
+
+    @Override
+    public Object visitNList(NListContext ctx) {
+        int n = ((Long) visit(ctx.expr(1))).intValue();
+        Object data = visit(ctx.expr(0));
+        Typespec type = ctx.expr(0).type;
+        ArrayList<SymEntry> list = new ArrayList<>();
+
+        for (int i = 0; i < n; i++)
+            list.add(new SymEntry(null, data, type));
         return list;
     }
 

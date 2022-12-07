@@ -1,6 +1,12 @@
 def fib(n):
-    if n == 1 or n == 2:
-        return 1
-    return fib(n-1) + fib(n-2)
+    if l[n-1] != -1:
+        return l[n-1]
+    l[n-1] = fib(n-1) + fib(n-2)
+    return l[n-1]
 
-print(fib(10))
+n = 50
+l = [-1] * n
+l[0] = 1
+l[1] = 1
+print(fib(n))
+print(l)

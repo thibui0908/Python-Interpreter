@@ -140,13 +140,25 @@ public class PythonBaseListener implements PythonListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterList(PythonParser.ListContext ctx) { }
+	@Override public void enterNList(PythonParser.NListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitList(PythonParser.ListContext ctx) { }
+	@Override public void exitNList(PythonParser.NListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNormalList(PythonParser.NormalListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNormalList(PythonParser.NormalListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -411,6 +423,18 @@ public class PythonBaseListener implements PythonListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFunctionCall(PythonParser.FunctionCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSubscriptFactor(PythonParser.SubscriptFactorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSubscriptFactor(PythonParser.SubscriptFactorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

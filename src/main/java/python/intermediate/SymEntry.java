@@ -15,7 +15,6 @@ public class SymEntry {
         this.data = data;
     }
 
-
     public String getName() {
         return name;
     }
@@ -40,5 +39,9 @@ public class SymEntry {
         this.type = type;
     }
 
+    @Override
+    public String toString() {
+        return data.toString();
+    }
 
 }

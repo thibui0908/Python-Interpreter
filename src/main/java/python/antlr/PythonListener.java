@@ -111,15 +111,29 @@ public interface PythonListener extends ParseTreeListener {
 	 */
 	void exitReturnStatement(PythonParser.ReturnStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PythonParser#list}.
+	 * Enter a parse tree produced by the {@code NList}
+	 * labeled alternative in {@link PythonParser#list}.
 	 * @param ctx the parse tree
 	 */
-	void enterList(PythonParser.ListContext ctx);
+	void enterNList(PythonParser.NListContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link PythonParser#list}.
+	 * Exit a parse tree produced by the {@code NList}
+	 * labeled alternative in {@link PythonParser#list}.
 	 * @param ctx the parse tree
 	 */
-	void exitList(PythonParser.ListContext ctx);
+	void exitNList(PythonParser.NListContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code normalList}
+	 * labeled alternative in {@link PythonParser#list}.
+	 * @param ctx the parse tree
+	 */
+	void enterNormalList(PythonParser.NormalListContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code normalList}
+	 * labeled alternative in {@link PythonParser#list}.
+	 * @param ctx the parse tree
+	 */
+	void exitNormalList(PythonParser.NormalListContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PythonParser#compound_stmt}.
 	 * @param ctx the parse tree
@@ -340,6 +354,16 @@ public interface PythonListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFunctionCall(PythonParser.FunctionCallContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PythonParser#subscriptFactor}.
+	 * @param ctx the parse tree
+	 */
+	void enterSubscriptFactor(PythonParser.SubscriptFactorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PythonParser#subscriptFactor}.
+	 * @param ctx the parse tree
+	 */
+	void exitSubscriptFactor(PythonParser.SubscriptFactorContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PythonParser#variableFactor}.
 	 * @param ctx the parse tree

@@ -28,9 +28,9 @@ public class App {
         PythonParser parser = new PythonParser(new CommonTokenStream(lexer));
         parser.setBuildParseTree(true);
         Executor exec = new Executor();
+        // System.out.println(parser.file_input().toStringTree(parser));
 
         exec.visit(parser.file_input());
-
 
     }
 }
